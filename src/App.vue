@@ -10,6 +10,7 @@
   </div>
 
   <Container :instaData="instaData" />
+  <button @click="more">view more</button>
 
   <div class="footer">
     <ul class="footer-button-plus">
@@ -20,8 +21,9 @@
 </template>
 
 <script>
+// npm install axios
+import axios from 'axios';
 import instaData from './assets/instaData.js'
-
 // 다른곳에서 쓰거나, 라우터로 나누거나, html이 너무 길어질 때 컴포넌트 생성
 import Container from './components/Container.vue'
 
@@ -30,10 +32,30 @@ export default {
   data() {
     return {
       instaData: instaData,
+      cnt: 0
     }
   },
   components: {
     Container,
+  },
+  methods: {
+    more() {
+      axios.get('https://codingapple1.github.io/vue/more' + this.cnt + '.json') // get 요청
+      .then((result) => { // 요청 성공 시 실행할 코드(콜백함수)
+        console.log("result : ", result);
+        this.instaData.push(result.data); // 기존 데이터에 새로 가져온 값을 추가
+        this.cnt++;
+
+        if (this.cnt % 2 == 0) {
+          this.cnt = 0;
+        } else {
+          this.cnt = 1;
+        }
+      })
+      .catch((err) => {
+        console.log("ERROR: ", err);
+      })
+    },
   }
 }
 </script>
