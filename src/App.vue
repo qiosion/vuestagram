@@ -1,27 +1,28 @@
 <template>
   <div class="header">
     <ul class="header-button-left">
-      <li>Cancel</li>
+      <li @click="step--">Cancel</li>
     </ul>
     <ul class="header-button-right">
-      <li>Next</li>
+      <li @click="step++">Next</li>
     </ul>
     <img src="./assets/logo.png" class="logo" />
   </div>
 
-  <Container :instaData="instaData" :step="step" />
+  <Container :instaData="instaData" :step="step" :img="img" />
   <button @click="more" class="viewMore">view more</button>
 
-  <div class="selectTap">
+  <!-- <div class="selectTap">
     <button @click="step = 0">0</button>
     <button @click="step = 1">1</button>
     <button @click="step = 2">2</button>
-  </div>
+  </div> -->
 
   <div class="footer">
     <ul class="footer-button-plus">
-      <input type="file" id="file" class="inputfile" />
-      <label for="file" class="input-plus">+</label>
+      <input @change="upload" multiple accept="image/*"
+      type="file" id="file" class="inputfile" />
+      <label for="file" class="input-plus">UPLOAD</label>
     </ul>
   </div>
 <!--
@@ -50,13 +51,27 @@ export default {
       instaData: instaData,
       cnt: 0,
       // tab: 0,
-      step: 1,
+      step: 0,
+      img: '',
     }
   },
   components: {
     Container,
   },
   methods: {
+    upload(e) {
+      let file = e.target.files; // files 에 업로드한 파일 전체가 담겨있음
+
+      // 업로드한 이미지를 다음 페이지로 보내고 띄우는 법
+      // 1. FileReader() : 파일을 글자로 변환
+      // 2. URL.createObjectURL() : 이미지의 가상 URL을 생성(호스팅)
+      let url = URL.createObjectURL(file[0]);
+      console.log("url : ", url)
+      this.img = url; // url을 Container 에 props로 보내기 위해 data의 return 에 변수를 추가하고, 거기에 url을 대입
+
+      // 이미지 업로드 후 다음 스텝으로 넘어감
+      this.step++; // 이거 했더니 1에서 시작하면 2로가서 안되겠음
+    },
     more() {
       axios.get('https://codingapple1.github.io/vue/more' + this.cnt + '.json') // get 요청
       .then((result) => { // 요청 성공 시 실행할 코드(콜백함수)

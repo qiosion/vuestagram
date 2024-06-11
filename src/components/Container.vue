@@ -7,7 +7,8 @@
 
 		<!-- 필터선택페이지 -->
 		<div v-if="step == 1">
-			<div class="upload-image"></div>
+			<!-- <div class="upload-image" :style="{ backgroundImage: `url(${img})` }"></div> -->
+			<div class="upload-image" :style="`background-image: url(${img})`"></div>
 			<div class="filters">
 				<div class="filter-1"></div>
 				<div class="filter-1"></div>
@@ -41,6 +42,7 @@ export default {
     // 해당 컴포넌트에서 써도 되지만, App.vue 에서도 탭을 사용할 가능성이 큼
     // 그러므로 props 로 받아와서 쓰자
     step: Number,
+    img: String
 	},
 	components: {
 		Post,
