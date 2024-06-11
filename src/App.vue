@@ -9,8 +9,14 @@
     <img src="./assets/logo.png" class="logo" />
   </div>
 
-  <Container :instaData="instaData" />
-  <button @click="more">view more</button>
+  <Container :instaData="instaData" :step="step" />
+  <button @click="more" class="viewMore">view more</button>
+
+  <div class="selectTap">
+    <button @click="step = 0">0</button>
+    <button @click="step = 1">1</button>
+    <button @click="step = 2">2</button>
+  </div>
 
   <div class="footer">
     <ul class="footer-button-plus">
@@ -18,6 +24,16 @@
       <label for="file" class="input-plus">+</label>
     </ul>
   </div>
+<!--
+  <div v-if="tab == 0">0</div>
+  <div v-if="tab == 1">1</div>
+  <div v-if="tab == 2">2</div>
+
+  <button @click="tab = 0">0</button>
+  <button @click="tab = 1">1</button>
+  <button @click="tab = 2">2</button>
+-->
+
 </template>
 
 <script>
@@ -32,7 +48,9 @@ export default {
   data() {
     return {
       instaData: instaData,
-      cnt: 0
+      cnt: 0,
+      // tab: 0,
+      step: 1,
     }
   },
   components: {
@@ -45,12 +63,8 @@ export default {
         console.log("result : ", result);
         this.instaData.push(result.data); // 기존 데이터에 새로 가져온 값을 추가
         this.cnt++;
-
-        if (this.cnt % 2 == 0) {
-          this.cnt = 0;
-        } else {
-          this.cnt = 1;
-        }
+        if (this.cnt % 2 == 0) this.cnt = 0;
+        else this.cnt = 1;
       })
       .catch((err) => {
         console.log("ERROR: ", err);
@@ -136,5 +150,26 @@ ul {
   position: relative;
   border-right: 1px solid #eee;
   border-left: 1px solid #eee;
+}
+
+button {
+  border: transparent;
+}
+
+.viewMore {
+  width: 100%;
+  height: 30px;
+  margin: 10px 0;
+}
+
+.selectTap {
+  text-align: center;
+}
+.selectTap button {
+  margin: 0 10px;
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  color: skyblue; 
 }
 </style>
