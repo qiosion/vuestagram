@@ -20,9 +20,14 @@
 
 		<!-- 글작성페이지 -->
 		<div v-if="step == 2">
-			<div class="upload-image"></div>
+			<div class="upload-image" :style="`background-image: url(${img})`"></div>
 			<div class="write">
-				<textarea class="write-box">write!</textarea>
+        <!--
+          textArea 에서 작성한 내용을 emit 으로 보냄(newContent 라는 변수명으로 지정, $event.target.value 라는 값)
+          근데 부모 컴포넌트에서 받을 때는 그냥 $event 만 사용. emit 한거 수신하는 문법으로, 정해져있는 값
+        -->
+				<textarea @input="$emit('newContent', $event.target.value)"
+        class="write-box" placeholder="write here"></textarea>
 			</div>
 		</div>
 
@@ -42,7 +47,8 @@ export default {
     // 해당 컴포넌트에서 써도 되지만, App.vue 에서도 탭을 사용할 가능성이 큼
     // 그러므로 props 로 받아와서 쓰자
     step: Number,
-    img: String
+    img: String,
+    newContent: String
 	},
 	components: {
 		Post,

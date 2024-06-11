@@ -1,15 +1,20 @@
 <template>
   <div class="header">
     <ul class="header-button-left">
-      <li @click="step--">Cancel</li>
+      <li v-if="step != 0" @click="step--">Cancel</li>
     </ul>
     <ul class="header-button-right">
-      <li @click="step++">Next</li>
+      <li v-if="step == 1" @click="step++">Next</li>
+      <li v-if="step == 2" @click="publish">Pub</li>
     </ul>
     <img src="./assets/logo.png" class="logo" />
   </div>
 
-  <Container :instaData="instaData" :step="step" :img="img" />
+  <!--
+    textArea 에서 작성한 내용을 emit 으로 보냄(newContent 라는 변수명으로 지정, $event.target.value 라는 값)
+    근데 부모 컴포넌트에서 받을 때는 그냥 $event 만 사용. emit 한거 수신하는 문법으로, 정해져있는 값
+  -->
+  <Container :instaData="instaData" :step="step" :img="img" @newContent="newContent = $event" />
   <button @click="more" class="viewMore">view more</button>
 
   <!-- <div class="selectTap">
@@ -53,12 +58,27 @@ export default {
       // tab: 0,
       step: 0,
       img: '',
+      newContent: '',
     }
   },
   components: {
     Container,
   },
   methods: {
+    publish() { // 발행
+      var newPost = {
+        name: "Sun Kang",
+        userImage: "https://picsum.photos/100?random=3",
+        postImage: this.img,
+        likes: 36,
+        date: "June 11",
+        liked: false,
+        content: this.newContent,
+        filter: "perpetua"
+      };
+      this.instaData.unshift(newPost); // unshift : 배열의 시작점에 삽입
+      this.step = 0;
+    },
     upload(e) {
       let file = e.target.files; // files 에 업로드한 파일 전체가 담겨있음
 
