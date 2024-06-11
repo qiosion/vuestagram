@@ -9,7 +9,7 @@
     <img src="./assets/logo.png" class="logo" />
   </div>
 
-  <Container />
+  <Container :instaData="instaData" />
 
   <div class="footer">
     <ul class="footer-button-plus">
@@ -20,10 +20,20 @@
 </template>
 
 <script>
+import instaData from './assets/instaData.js'
+
 // 다른곳에서 쓰거나, 라우터로 나누거나, html이 너무 길어질 때 컴포넌트 생성
+import Container from './components/Container.vue'
+
 export default {
   name: 'App',
+  data() {
+    return {
+      instaData: instaData,
+    }
+  },
   components: {
+    Container,
   }
 }
 </script>
