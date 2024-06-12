@@ -5,7 +5,22 @@
       2. 기존 문자열을 따옴표로 감싸준 뒤 + 를 사용해서 이어줌 (공백 필수) "'filter-item ' + filter"
       3. class 를 하나 더 만들어줌 :class="filter" class="filter-item" 처럼
   -->
-	<div :class="'filter-item ' + filter" :style="`background-image: url(${img})`">
+
+	<div :class="'filter-item ' + filter"
+  :style="`background-image: url(${img})`"
+  @click="useThis(filter)">
+  <!--
+      mitt 를 이용한 데이터 전송
+          methods: {
+            this.emitter.emit('변수명', '전송할 데이터')
+          }
+      데이터 수신
+          mounted() {
+            this.emitter.on('변수명', () => { // 누가 변수명과 같은 이벤트 전송하면 실행할 코드를 아래에 작성
+              // () 안에 이벤트할 때 들어있던 데이터를 파라미터로 넣을 수 있음
+            })
+          }
+  -->
     <!--
         slot : 부모 -> 자식 데이터 전송 (props 외의 다른 방법)
             1. 자식 컴포넌트에 slot 태그를 생성
@@ -19,22 +34,20 @@
     -->
     <slot></slot>
   </div>
-  <!-- <div>
-    <slot :msg="msg"></slot>
-  </div> -->
 </template>
 <script>
 export default {
 	name: "FilterBox",
 	data() {
 		return {
-      // slot props : slot 사용 시 부모컴포넌트가 자식컴포넌트의 데이터가 필요한 경우
-      // 1. data 에 보낼 데이터 등록
-      // 2. 자식컴포넌트의 slot 에 전송할 데이터 등록 <slot :msg="msg"></slot>
-      // 3. 부모컴포넌트에서 <template v-slot:default="변수명">{{ 변수명.msg }} 와 같은 방식으로 사용
-      msg: 'slot props'
     };
 	},
+  methods: {
+    useThis(filter) {
+      console.log("filter : ", filter)
+      this.emitter.emit('selectedFilter', filter); // '변수명', '전송할 데이터'
+    }
+  },
 	props: {
     img: String,
     filter: String,

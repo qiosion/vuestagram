@@ -11,10 +11,28 @@
   </div>
 
   <!--
-    textArea 에서 작성한 내용을 emit 으로 보냄(newContent 라는 변수명으로 지정, $event.target.value 라는 값)
-    근데 부모 컴포넌트에서 받을 때는 그냥 $event 만 사용. emit 한거 수신하는 문법으로, 정해져있는 값
+      하위 -> 상위 데이터 전달
+      1. custom event : 자식 컴포넌트 -> 부모 컴포넌트 데이터 전달
+          textArea 에서 작성한 내용을 emit 으로 보냄(newContent 라는 변수명으로 지정, $event.target.value 라는 값)
+          근데 부모 컴포넌트에서 받을 때는 그냥 $event 만 사용. emit 한거 수신하는 문법으로, 정해져있는 값
+      
+      2. mitt 라이브러리 : 컴포넌트 -> 타 컴포넌트 단계 상관없이 한번에 데이터 전달 (형제, 부모의 부모 등)
+          npm install mitt
+          main.js 에서 mitt 라이브러리 세팅
+
+          mitt 를 이용한 데이터 전송
+              methods: {
+                this.emitter.emit('변수명', '전송할 데이터')
+              }
+          데이터 수신
+              mounted() {
+                this.emitter.on('변수명', () => { // 누가 변수명과 같은 이벤트 전송하면 실행할 코드를 아래에 작성
+                  // () 안에 이벤트할 때 들어있던 데이터를 파라미터로 넣을 수 있음
+                })
+              }
+      3. Vuex : mitt로 너무 많이 쓰게되면 관리가 힘듦. 대체품
   -->
-  <Container :instaData="instaData" :step="step" :img="img" @newContent="newContent = $event" />
+  <Container :instaData="instaData" :step="step" :img="img" @newContent="newContent = $event" :selectedFilter="selectedFilter" />
   <button @click="more" class="viewMore">view more</button>
 
   <!-- <div class="selectTap">
@@ -59,11 +77,17 @@ export default {
       step: 0,
       img: '',
       newContent: '',
+      selectedFilter: '',
     }
   },
   components: {
     Container,
   },
+  mounted() {
+    this.emitter.on('selectedFilter', (filter) => { // mitt 을 이용한 데이터 전송
+      this.selectedFilter = filter;
+    });
+  }, 
   methods: {
     publish() { // 발행
       var newPost = {
@@ -74,7 +98,7 @@ export default {
         date: "June 11",
         liked: false,
         content: this.newContent,
-        filter: "perpetua"
+        filter: this.selectedFilter
       };
       this.instaData.unshift(newPost); // unshift : 배열의 시작점에 삽입
       this.step = 0;
