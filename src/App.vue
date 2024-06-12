@@ -11,6 +11,23 @@
   </div>
 
   <!--
+      Vuex 데이터 수정 방법
+      1. store.js 에 state 수정 방법 정의
+        mutations 항목 안에 함수형식으로 작성한다. 이때 파라미터가 꼭 필요하고, 그것은 위의 state 오브젝트를 뜻함
+      2. 데이터 수정을 실행할 컴포넌트에서 $store.commit('동작할 함수명') 함수를 이용해 요청
+        $store.commit('함수명', 데이터) 로 데이터를 전달할 수 있음
+  -->
+  <p>
+    안녕, {{ $store.state.name }} ! {{ $store.state.age }}
+  </p>
+  <button @click="$store.commit('changeName')">
+    Name
+  </button>
+  <button @click="$store.commit('plusAge', 10)">
+    Age
+  </button>
+
+  <!--
       하위 -> 상위 데이터 전달
       1. custom event : 자식 컴포넌트 -> 부모 컴포넌트 데이터 전달
           textArea 에서 작성한 내용을 emit 으로 보냄(newContent 라는 변수명으로 지정, $event.target.value 라는 값)
