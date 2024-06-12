@@ -25,7 +25,7 @@
             또한, 전송할 데이터가 많을 경우 props 사용
         -->
         <FilterBox :img="img" :filter="filter" v-for="(filter, i) in filters" :key="i">
-          filter
+          <span>{{ filter }}</span>
         </FilterBox>
 			</div>
 		</div>
