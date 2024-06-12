@@ -6,7 +6,9 @@ const store = createStore({
     // 데이터 사용 시에는 {{ $store.state.변수명 }}
     return {
       name: 'kim',
-      age: 20
+      age: 20,
+      liked: false, // 좋아요 눌렀는지 안눌렀는지
+      likes: 22,
     }
   },
   // vuex 데이터는 컴포넌트 안에서 직접 데이터를 수정하는 일이 없도록 주의하자
@@ -16,6 +18,15 @@ const store = createStore({
   // 2. 데이터 수정을 실행할 컴포넌트에서 $store.commit('동작할 함수명') 함수를 이용해 요청
   //    $store.commit('함수명', 데이터) 로 데이터를 전달할 수 있음
   mutations: {
+    liked(state) {
+      if(state.liked) { // 좋아요 취소
+        state.likes--;
+        state.liked = false;
+      } else { // 좋아요
+        state.likes++;
+        state.liked = true;
+      }
+    },
     plusAge(state, data) { // plusAge(state, data) 처럼, 아규먼트로 보낸 데이터를 파라미터로 사용가능
       state.age += data;
     },

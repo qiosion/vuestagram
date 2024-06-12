@@ -4,9 +4,12 @@
 			<div class="profile" :style="{ backgroundImage: `url(${instaData.userImage})`}"></div>
 			<span class="profile-name"><slot name="name"></slot></span>
 		</div>
-		<div :class="`post-body ${instaData.filter}`" :style="{ backgroundImage: `url(${instaData.postImage})`}"></div>
+		<div
+    :class="`post-body ${instaData.filter}`"
+    :style="{ backgroundImage: `url(${instaData.postImage})`}"
+    @click="$store.commit('liked')"></div>
 		<div class="post-content">
-			<p><slot name="likes"></slot> Likes</p>
+			<p>{{ $store.state.likes }} Likes</p>
 			<p><strong>{{ instaData.name }}</strong> {{ instaData.content }}</p>
 			<p class="date">{{ instaData.date }}</p>
 		</div>
