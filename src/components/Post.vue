@@ -2,14 +2,14 @@
 	<div class="post">
 		<div class="post-header">
 			<div class="profile" :style="{ backgroundImage: `url(${instaData.userImage})`}"></div>
-			<span class="profile-name"><slot name="name"></slot></span>
+			<span class="profile-name">{{ instaData.name }}</span>
 		</div>
 		<div
     :class="`post-body ${instaData.filter}`"
     :style="{ backgroundImage: `url(${instaData.postImage})`}"
-    @click="$store.commit('liked')"></div>
+    @click="$store.commit('liked', i)"></div>
 		<div class="post-content">
-			<p>{{ $store.state.likes }} Likes</p>
+			<p>{{ instaData.likes }} Likes</p>
 			<p><strong>{{ instaData.name }}</strong> {{ instaData.content }}</p>
 			<p class="date">{{ instaData.date }}</p>
 		</div>
@@ -20,6 +20,7 @@ export default {
 	name: "Post",
   props: {
     instaData: Object,
+    i: Number,
   },
 };
 </script>

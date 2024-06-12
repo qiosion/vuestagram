@@ -17,7 +17,7 @@
       2. 데이터 수정을 실행할 컴포넌트에서 $store.commit('동작할 함수명') 함수를 이용해 요청
         $store.commit('함수명', 데이터) 로 데이터를 전달할 수 있음
   -->
-  <p>
+  <!-- <p>
     안녕, {{ $store.state.name }} ! {{ $store.state.age }}
   </p>
   <button @click="$store.commit('changeName')">
@@ -25,7 +25,7 @@
   </button>
   <button @click="$store.commit('plusAge', 10)">
     Age
-  </button>
+  </button> -->
 
   <!--
       하위 -> 상위 데이터 전달
@@ -111,7 +111,7 @@ export default {
         name: "Sun Kang",
         userImage: "https://picsum.photos/100?random=3",
         postImage: this.img,
-        likes: 36,
+        likes: 0,
         date: "June 11",
         liked: false,
         content: this.newContent,

@@ -2,9 +2,10 @@
 	<div>
 		<!-- 게시글페이지 -->
 		<div v-if="step == 0">
-			<Post :instaData="instaData[i]" v-for="(a, i) in instaData" :key="i">
-        <template v-slot:name>{{ instaData[i].name }}</template>
-        <template v-slot:likes>{{ instaData[i].likes }}</template>
+			<Post :instaData="$store.state.instaData[i]" :i="i"
+      v-for="(a, i) in $store.state.instaData" :key="i">
+        <!-- <template v-slot:name>{{ instaData[i].name }}</template> -->
+        <!-- <template v-slot:likes>{{ instaData[i].likes }}</template> -->
       </Post>
 		</div>
 
@@ -43,6 +44,7 @@ export default {
         "inkwell", "kelvin", "lark", "lofi", "maven", "mayfair", "moon", "nashville", "perpetua",
         "reyes", "rise", "slumber", "stinson", "toaster", "valencia", "walden", "willow", "xpro2"
       ],
+      // i: 0,
     }
   },
 	props: {
