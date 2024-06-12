@@ -10,11 +10,7 @@
 			<!-- <div class="upload-image" :style="{ backgroundImage: `url(${img})` }"></div> -->
 			<div class="upload-image" :style="`background-image: url(${img})`"></div>
 			<div class="filters">
-				<div class="filter-1"></div>
-				<div class="filter-1"></div>
-				<div class="filter-1"></div>
-				<div class="filter-1"></div>
-				<div class="filter-1"></div>
+        <FilterBox :img="img" :filter="filter" v-for="(filter, i) in filters" :key="i"></FilterBox>
 			</div>
 		</div>
 
@@ -35,11 +31,17 @@
 </template>
 <script>
 import Post from "./Post.vue";
+import FilterBox from "./FilterBox.vue";
 
 export default {
 	name: "Container",
   data() {
     return {
+      filters: [
+        "aden", "_1977", "brannan", "brooklyn", "clarendon", "earlybird", "gingham", "hudson",
+        "inkwell", "kelvin", "lark", "lofi", "maven", "mayfair", "moon", "nashville", "perpetua",
+        "reyes", "rise", "slumber", "stinson", "toaster", "valencia", "walden", "willow", "xpro2"
+      ],
     }
   },
 	props: {
@@ -52,6 +54,7 @@ export default {
 	},
 	components: {
 		Post,
+    FilterBox,
 	},
 };
 </script>

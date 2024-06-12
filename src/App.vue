@@ -86,11 +86,10 @@ export default {
       // 1. FileReader() : 파일을 글자로 변환
       // 2. URL.createObjectURL() : 이미지의 가상 URL을 생성(호스팅)
       let url = URL.createObjectURL(file[0]);
-      console.log("url : ", url)
       this.img = url; // url을 Container 에 props로 보내기 위해 data의 return 에 변수를 추가하고, 거기에 url을 대입
 
       // 이미지 업로드 후 다음 스텝으로 넘어감
-      this.step++; // 이거 했더니 1에서 시작하면 2로가서 안되겠음
+      this.step++;
     },
     more() {
       axios.get('https://codingapple1.github.io/vue/more' + this.cnt + '.json') // get 요청
