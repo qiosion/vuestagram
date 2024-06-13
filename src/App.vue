@@ -136,6 +136,10 @@ export default {
   //    mapMutations()는 vuex의 함수이므로 import 가 필요함
   //    mapMutations(['', '']) 
   //    다른 함수와 함께 쓰려면 ...mapMutations(['']) 와 같이 ... 이 필요
+  // 1-2. mapActions()
+  //    store된 actions 를 한번에 꺼내 쓸 때 사용
+  //    mapActions(['', '']) 
+  //    다른 함수와 함께 쓰려면 ...mapActions(['']) 와 같이 ... 이 필요
 
   // 2. computed: {} : 사용해도 새로 실행되지 않고 기존 값 유지
   //    함수라기보다 데이터 계산 결과를 저장하는 공간이라고 생각하자. state data와 같은 취급 하면 됨
