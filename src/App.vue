@@ -69,6 +69,12 @@
     <button @click="step = 2">2</button>
   </div> -->
 
+  <h4>재렌더링 횟수 : {{ counter }}</h4>
+  <p>now1() : {{ now1() }}</p>
+  <p>now2 : {{ now2 }}</p>
+  <button @click="counter++">렌더링</button>
+
+
   <div class="footer">
     <ul class="footer-button-plus">
       <input @change="upload" multiple accept="image/*"
@@ -106,6 +112,7 @@ export default {
       img: '',
       newContent: '',
       selectedFilter: '',
+      counter: 0, // now 함수 재 렌더링을 위한 변수
     }
   },
   components: {
@@ -116,7 +123,15 @@ export default {
       this.selectedFilter = filter;
     });
   }, 
-  methods: {
+  // 함수 정의
+  // 1. methods: {} : 사용할 때마다 새로 실행됨(일반적인 함수)
+  // 2. computed: {} : 사용해도 새로 실행되지 않고 기존 값 유지
+  //    함수라기보다 데이터 계산 결과를 저장하는 공간이라고 생각하자. state data와 같은 취급 하면 됨
+  //    vue 파일이 처음 로드됐을 때 모두 한번씩 실행하고, 그 값을 간직함
+  //    그 후 함수 호출하면 처음 로드됐을 때의 값을 반환함
+  //    컴퓨팅 파워를 아낌. 자원절약
+  //    호출할 때 소괄호 쓰면 안됨
+  methods: { // 일반적인 함수
     publish() { // 발행
       var newPost = {
         name: "Sun Kang",
@@ -156,7 +171,16 @@ export default {
         console.log("ERROR: ", err);
       })
     },
-  }
+    now1() {
+      return new Date()
+    },
+  },
+  computed: { // 제일 처음 로드될 때 실행하고, 그 값을 유지
+    // 호출할 때 소괄호 쓰면 안됨
+    now2() {
+      return new Date()
+    },
+  },
 }
 </script>
 
