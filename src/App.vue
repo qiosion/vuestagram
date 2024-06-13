@@ -73,6 +73,10 @@
   <p>now1() : {{ now1() }}</p>
   <p>now2 : {{ now2 }}</p>
   <button @click="counter++">렌더링</button>
+  <p>computed 를 이용하면 store된 데이터를 사용하기  편함</p>
+  <p>{{ name }}</p>
+  <p>{{ instaData }}</p>
+  <p>{{ cnt }}</p>
 
 
   <div class="footer">
@@ -100,6 +104,7 @@ import axios from 'axios';
 import instaData from './assets/instaData.js'
 // 다른곳에서 쓰거나, 라우터로 나누거나, html이 너무 길어질 때 컴포넌트 생성
 import Container from './components/Container.vue'
+import { mapState } from 'vuex';
 
 export default {
   name: 'App',
@@ -128,9 +133,15 @@ export default {
   // 2. computed: {} : 사용해도 새로 실행되지 않고 기존 값 유지
   //    함수라기보다 데이터 계산 결과를 저장하는 공간이라고 생각하자. state data와 같은 취급 하면 됨
   //    vue 파일이 처음 로드됐을 때 모두 한번씩 실행하고, 그 값을 간직함
-  //    그 후 함수 호출하면 처음 로드됐을 때의 값을 반환함
-  //    컴퓨팅 파워를 아낌. 자원절약
-  //    호출할 때 소괄호 쓰면 안됨
+  //    그 후 함수 호출하면 처음 로드됐을 때의 값을 반환함 (컴퓨팅 파워를 아낌. 자원절약)
+  //    호출할 때 소괄호 쓰면 안되고, 반드시 return
+  //    store.js에 저장된 state들을 꺼내 쓸 때 자주 사용
+  // 2-1. mapState()
+  //    mapState()는 vuex의 함수이므로 import 가 필요함
+  //    mapState() 를 이용해 state 를 개별적으로 가져오는게 아니라 한번에 꺼내 쓸
+  //    mapState(['', ''], ..) 와 같이 배열 안에 내가 가져오려는 state를 작성
+  //    또는 mapState({키: 값, ..}) 와 같이 object 형식으로 작성 가능
+  //    다른 computed 함수와 함께 쓰려면 ...mapState(['']) 와 같이 ... 이 필요
   methods: { // 일반적인 함수
     publish() { // 발행
       var newPost = {
@@ -176,10 +187,21 @@ export default {
     },
   },
   computed: { // 제일 처음 로드될 때 실행하고, 그 값을 유지
+    // store.js에 저장된 state들을 꺼내 쓸 때 자주 사용
     // 호출할 때 소괄호 쓰면 안됨
     now2() {
       return new Date()
     },
+    name() {
+      return this.$store.state.name
+    },
+    age() {
+      return this.$store.state.age
+    },
+    // mapState()는 vuex의 함수이므로 import 가 필요함
+    // state 를 개별적으로 가져오는게 아니라 한번에 꺼내 쓸 수 있음
+    // 배열 또는 오브젝트 안에 내가 가져오려는 state를 작성
+    ...mapState(['cnt', 'instaData']), // 다른 computed 함수와 함께 쓰려면 ... 이 필요함
   },
 }
 </script>
