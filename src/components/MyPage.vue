@@ -14,6 +14,7 @@
 <script>
 import axios from 'axios';
 import { ref, onMounted, reactive, toRefs, watch, computed } from 'vue';
+import { useStore } from 'vuex'; // store.js 사용
 
 export default {
   name: 'MyPage',
@@ -56,6 +57,12 @@ export default {
     // 왜 0이냐? follower 배열은 ajax 요청을 통해서 값들이 추가됨
     // 근데 computed는 제일 처음에 페이지 로드할 때 실행하고, 그 값을 유지하는 함수
  
+    // vuex 에 store 된 데이터 사용
+    let store = useStore();
+    let name = store.state.name; // $store 랑 비슷
+    console.log("stored name : ", name);
+    // composition API 에서는 mapState 못씀
+
     // hook : 기존의 명칭 앞에 on 이 붙음. import 필요
     onMounted(() => {
       // ajax 요청
@@ -67,8 +74,7 @@ export default {
       })
     })
 
-
-    return { follower }
+    return { follower } // ref
   },
 }
 </script>
