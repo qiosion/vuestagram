@@ -1,7 +1,7 @@
 <template>
 	<div style="padding: 10px">
 		<h4>팔로워</h4>
-		<input placeholder="🔍" />
+		<input placeholder="🔍" @input="search($event.target.value)" />
     <!-- Post.vue 에서 적용했던 css가 여기도 먹힘
     왜? build 하면 여러 파일에 있던 css가 하나의 파일로 합쳐지기 때문
     그게 싫으면 <style scoped> 태그로 작성함. 그러면 다른 파일에 안먹힘 -->
@@ -35,6 +35,7 @@ export default {
     // 2. reactive() : array, object
     // 모든 데이터를 reference data type 으로 감싸야 실시간 반영 가능(재렌더링)
     let follower = ref([]);
+    let followerOriginal = ref([]);
     let test = reactive({});
     test;
     
@@ -71,10 +72,21 @@ export default {
         // 데이터 변경 하기 위해서는 반드시 데이터.value 로 써야함
         // 데이터를 ref() 에 담아서 만들었으므로 일종의 object 안에 가뒀다고 보는 것
         follower.value = result.data;
+        followerOriginal.value = [...result.data]; // 원본 데이터 저장
       })
     })
 
-    return { follower } // ref
+    // 검색기능
+    function search(inputVal) {
+      let searchResult = followerOriginal.value.filter((arr) => {
+        // 전체 팔로워의 이름 항목에서 입력값(inputVal)을 찾을 수 있을 때 (index가 -1이 아닐 때)
+        return arr.name.indexOf(inputVal) != -1; // 해당 요소를 반환하고
+      });
+      follower.value = [...searchResult]; // 팔로워 배열의 값에 검색 결과값을 넣어줌
+      // ... : 스프레드 연산자. 배열을 개별 요소로 풀어서 할당하는 역할
+    }
+
+    return { follower, search } // 변수, 함수
   },
 }
 </script>
