@@ -70,14 +70,13 @@
     <button @click="step = 2">2</button>
   </div> -->
 
-  <h4>재렌더링 횟수 : {{ counter }}</h4>
+  <!-- <h4>재렌더링 횟수 : {{ counter }}</h4>
   <p>now1() : {{ now1() }}</p>
   <p>now2 : {{ now2 }}</p>
   <button @click="counter++">렌더링</button>
-  <p>computed 를 이용하면 store된 데이터를 사용하기  편함</p>
   <p>{{ name }}</p>
   <p>{{ instaData }}</p>
-  <p>{{ cnt }}</p>
+  <p>{{ cnt }}</p> -->
 
 
   <div class="footer">
@@ -114,13 +113,16 @@ export default {
       instaData: instaData,
       cnt: 0,
       // tab: 0,
-      step: 0,
+      step: 3,
       img: '',
       newContent: '',
       selectedFilter: '',
       counter: 0, // now 함수 재 렌더링을 위한 변수
     }
   },
+  // 컴포넌트 별로 Composition API 와 Options API 선택 가능성
+  // 기존에 쓰던 방식이 Options API
+  // Composition API 쓰면 관련있는 코드를 한 곳에 모을 수 있음
   components: {
     Container,
   },
