@@ -58,11 +58,10 @@
           ajax 요청 actions: { 함수명() {} }
               $store.dispatch('실행함수명')
   -->
-  <p>{{ $store.state.more }}</p>
-  <button @click="$store.dispatch('getData')" >view more</button>
-
   <Container :instaData="instaData" :step="step" :img="img" @newContent="newContent = $event" :selectedFilter="selectedFilter" />
   <!-- <button @click="more" class="viewMore">view more</button> -->
+  <!-- <p>{{ $store.state.more }}</p> -->
+  <button @click="$store.dispatch('getData')" >view more</button>
 
   <!-- <div class="selectTap">
     <button @click="step = 0">0</button>

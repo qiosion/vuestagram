@@ -13,6 +13,7 @@ const store = createStore({
       name: 'kim',
       age: 20,
       instaData: instaData,
+      cnt: 0,
       more: {}, // 더보기로 가져온 게시물. object 자료형
     }
   },
@@ -41,6 +42,10 @@ const store = createStore({
     },
     setMore(state, data) {
       state.more = data;
+      state.instaData.push(data);
+      state.cnt++;
+      if (state.cnt % 2 == 0) state.cnt = 0;
+      else state.cnt = 1;
     },
   },
   // vuex 에서 ajax 또는 오래 걸리는 작업들을 actions 에서 함.
@@ -51,7 +56,7 @@ const store = createStore({
   // 2. 실행할 컴포넌트에서 $store.dispatch('실행할 함수명') 을 이용해 ajax 요청
   actions: {
     getData(context) {
-      axios.get('https://codingapple1.github.io/vue/more0.json')
+      axios.get('https://codingapple1.github.io/vue/more'+context.state.cnt+'.json')
       .then((result) => {
         console.log("result : ", result.data);
 
