@@ -17,15 +17,16 @@
       2. 데이터 수정을 실행할 컴포넌트에서 $store.commit('동작할 함수명') 함수를 이용해 요청
         $store.commit('함수명', 데이터) 로 데이터를 전달할 수 있음
   -->
-  <!-- <p>
+  <p>
     안녕, {{ $store.state.name }} ! {{ $store.state.age }}
   </p>
   <button @click="$store.commit('changeName')">
     Name
   </button>
-  <button @click="$store.commit('plusAge', 10)">
+  <!-- <button @click="$store.commit('plusAge', 10)"> -->
+  <button @click="plusAge(10)">
     Age
-  </button> -->
+  </button>
 
   <!--
       하위 -> 상위 데이터 전달
@@ -104,7 +105,7 @@ import axios from 'axios';
 import instaData from './assets/instaData.js'
 // 다른곳에서 쓰거나, 라우터로 나누거나, html이 너무 길어질 때 컴포넌트 생성
 import Container from './components/Container.vue'
-import { mapState } from 'vuex';
+import { mapMutations, mapState } from 'vuex';
 
 export default {
   name: 'App',
@@ -130,6 +131,12 @@ export default {
   }, 
   // 함수 정의
   // 1. methods: {} : 사용할 때마다 새로 실행됨(일반적인 함수)
+  // 1-1. mapMutations()
+  //    store된 mutations 를 한번에 꺼내 쓸 때 사용
+  //    mapMutations()는 vuex의 함수이므로 import 가 필요함
+  //    mapMutations(['', '']) 
+  //    다른 함수와 함께 쓰려면 ...mapMutations(['']) 와 같이 ... 이 필요
+
   // 2. computed: {} : 사용해도 새로 실행되지 않고 기존 값 유지
   //    함수라기보다 데이터 계산 결과를 저장하는 공간이라고 생각하자. state data와 같은 취급 하면 됨
   //    vue 파일이 처음 로드됐을 때 모두 한번씩 실행하고, 그 값을 간직함
@@ -137,8 +144,8 @@ export default {
   //    호출할 때 소괄호 쓰면 안되고, 반드시 return
   //    store.js에 저장된 state들을 꺼내 쓸 때 자주 사용
   // 2-1. mapState()
-  //    mapState()는 vuex의 함수이므로 import 가 필요함
   //    mapState() 를 이용해 state 를 개별적으로 가져오는게 아니라 한번에 꺼내 쓸
+  //    mapState()는 vuex의 함수이므로 import 가 필요함
   //    mapState(['', ''], ..) 와 같이 배열 안에 내가 가져오려는 state를 작성
   //    또는 mapState({키: 값, ..}) 와 같이 object 형식으로 작성 가능
   //    다른 computed 함수와 함께 쓰려면 ...mapState(['']) 와 같이 ... 이 필요
@@ -185,6 +192,10 @@ export default {
     now1() {
       return new Date()
     },
+    // mapMutations()는 vuex의 함수이므로 import 가 필요함
+    // mutations 를 개별적으로 가져오는게 아니라 한번에 꺼내 쓸 수 있음
+    // 배열 또는 오브젝트 안에 내가 가져오려는 mutation 작성
+    ...mapMutations(['plusAge']), // 다른 함수와 함께 쓰려면 ... 이 필요함
   },
   computed: { // 제일 처음 로드될 때 실행하고, 그 값을 유지
     // store.js에 저장된 state들을 꺼내 쓸 때 자주 사용
