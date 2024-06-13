@@ -48,9 +48,21 @@
                 })
               }
       3. Vuex : mitt로 너무 많이 쓰게되면 관리가 힘듦. 대체품
+          npm install vuex --save
+          main.js 에서 vuex 세팅
+          데이터를 한 곳에서 관리. 파일명은 관습적으로 store.js 라고 함
+
+          데이터 정의 state() { return { key: value } }
+          데이터 수정 mutations: { 함수명(state, 파라미터) {} }
+              $store.commit('실행함수명', 파라미터)
+          ajax 요청 actions: { 함수명() {} }
+              $store.dispatch('실행함수명')
   -->
+  <p>{{ $store.state.more }}</p>
+  <button @click="$store.dispatch('getData')" >view more</button>
+
   <Container :instaData="instaData" :step="step" :img="img" @newContent="newContent = $event" :selectedFilter="selectedFilter" />
-  <button @click="more" class="viewMore">view more</button>
+  <!-- <button @click="more" class="viewMore">view more</button> -->
 
   <!-- <div class="selectTap">
     <button @click="step = 0">0</button>
